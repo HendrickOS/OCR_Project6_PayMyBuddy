@@ -1,10 +1,19 @@
+#spring:
+#    datasource:
+#        url: jdbc:derby:directory:C://Derby//test;create=true
+#        username: derbyuser
+#        password: password
+#    jpa:   
+#        show-sql: true
+#        hibernate.ddl-auto: update
+#        properties.hibernate.dialect: org.hibernate.dialect.DerbyTenSevenDialect
+        
 spring:
     datasource:
-        url: jdbc:derby:directory:C://Derby//test;create=true
-        username: derbyuser
+        url: jdbc:derby:directory:C://Derby//contact;create=true
+        username: databasePMB
         password: password
     jpa:   
         show-sql: true
         hibernate.ddl-auto: update
         properties.hibernate.dialect: org.hibernate.dialect.DerbyTenSevenDialect
-        
