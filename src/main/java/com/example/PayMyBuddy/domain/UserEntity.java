@@ -12,8 +12,9 @@ public class UserEntity {
     private Integer id;
 	private String firstName;
     private String lastName;
+    private String email;
     
-    public Integer getId() {
+	public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
@@ -30,5 +31,11 @@ public class UserEntity {
 	}
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }

@@ -3,29 +3,29 @@ package com.example.PayMyBuddy.misc;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import com.example.PayMyBuddy.domain.ContactEntity;
 import com.example.PayMyBuddy.domain.UserEntity;
 import com.example.PayMyBuddy.persistence.ContactDAO;
-import com.example.PayMyBuddy.persistence.UserDAO;
+import com.example.PayMyBuddy.persistence.UserDao;
 
-@Component
+//@Component
 public class DataInitializr {
 	@Autowired
-	UserDAO userDAO;
-	
+	UserDao userDAO;
+
 	@Autowired
 	ContactDAO contactDAO;
-	
+
 	@PostConstruct
 	public void init() {
 		UserEntity user = new UserEntity();
 		user.setFirstName("Hendrick");
 		user.setLastName("Osseux");
+		user.setEmail("hendrickosseux@email.com");
 		userDAO.save(user);
 	}
-	
+
 	@PostConstruct
 	public void init2() {
 		ContactEntity contact = new ContactEntity();
