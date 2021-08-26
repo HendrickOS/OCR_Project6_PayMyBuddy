@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.PayMyBuddy.domain.ContactEntity;
 import com.example.PayMyBuddy.domain.UserEntity;
-import com.example.PayMyBuddy.persistence.ContactDAO;
+import com.example.PayMyBuddy.persistence.ContactDaoJDBCImpl;
 import com.example.PayMyBuddy.persistence.UserDao;
 
 //@Component
@@ -15,7 +15,7 @@ public class DataInitializr {
 	UserDao userDAO;
 
 	@Autowired
-	ContactDAO contactDAO;
+	ContactDaoJDBCImpl contactDAO;
 
 	@PostConstruct
 	public void init() {
