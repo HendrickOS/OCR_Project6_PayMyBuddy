@@ -1,7 +1,5 @@
 package com.example.PayMyBuddy.persistence;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -18,8 +16,8 @@ public class ContactDaoJDBCImpl implements ContactDao {
 	}
 
 	@Override
-	public List<ContactEntity> findAll() {
-		return null; // contactRepository.findAll();
+	public Iterable<ContactEntity> findAll() {
+		return contactRepository.findAll();
 	}
 
 	@Override

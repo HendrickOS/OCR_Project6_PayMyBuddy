@@ -1,7 +1,5 @@
 package com.example.PayMyBuddy.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,7 +26,7 @@ public class ContactController {
 
 	/* Liste de tous les contacts */
 	@GetMapping("/list")
-	public List<ContactEntity> findAll() {
+	public Iterable<ContactEntity> findAll() {
 		return contactDao.findAll();
 	}
 

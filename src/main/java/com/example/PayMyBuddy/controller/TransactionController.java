@@ -12,45 +12,45 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.PayMyBuddy.domain.TransactionEntity;
-import com.example.PayMyBuddy.service.TransactionService;
+import com.example.PayMyBuddy.persistence.TransactionDao;
 
 @RestController
-@RequestMapping("/transaction")
+@RequestMapping("/transactions")
 public class TransactionController {
 
 	@Autowired
-	TransactionService transactionService;
+	TransactionDao transactionDao;
 
 	/* Liste de toutes les transactions (envoyé et reçu) */
 	@GetMapping("/list")
 	public List<TransactionEntity> findAll() {
-		return transactionService.findAll();
+		return transactionDao.findAll();
 	}
 
 	/* Liste des transactions reçues */
 	@GetMapping("/receipt")
 	public List<TransactionEntity> receivedMoney() {
-		return transactionService.receivedMoney();
+		return transactionDao.receivedMoney();
 	}
 
 	/* Liste des transactions sorties */
 	@GetMapping("/send")
 	public List<TransactionEntity> sentMoney() {
-		return transactionService.sentMoney();
+		return transactionDao.sentMoney();
 	}
 
-	/* Envoyer de l'argent */
+	/* Envoyer de l'argent à un contact */
 	@PostMapping("/payment")
 	@ResponseStatus(HttpStatus.CREATED)
 	public void payment(@RequestBody TransactionEntity transactionEntity) {
-		transactionService.payment();
+		transactionDao.payment();
 	}
 
 	/* Réapprovisionner son compte PayMyBuddy */
 	@PostMapping("/supplying")
 	@ResponseStatus(HttpStatus.CREATED)
 	public void supplying(@RequestBody TransactionEntity transactionEntity) {
-		transactionService.supplying();
+		transactionDao.supplying();
 	}
 
 }

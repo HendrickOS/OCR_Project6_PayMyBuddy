@@ -1,39 +1,39 @@
-package com.example.PayMyBuddy.service;
+package com.example.PayMyBuddy.persistence;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.example.PayMyBuddy.domain.TransactionEntity;
-import com.example.PayMyBuddy.persistence.TransactionRepository;
 
-@Service
-public class TransactionService {
+@Component
+public class TransactionDaoJDBCImpl implements TransactionDao {
 
-	@Autowired
-	TransactionRepository transactionRepository;
-
+	@Override
 	public List<TransactionEntity> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public void payment() {
-		// TODO Auto-generated method stub
-
-	}
-
+	@Override
 	public List<TransactionEntity> receivedMoney() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@Override
 	public List<TransactionEntity> sentMoney() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@Override
+	public void payment() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
 	public void supplying() {
 		// TODO Auto-generated method stub
 
