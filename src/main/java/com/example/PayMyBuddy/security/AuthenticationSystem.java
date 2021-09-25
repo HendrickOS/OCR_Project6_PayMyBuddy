@@ -22,6 +22,7 @@ public class AuthenticationSystem {
 
 		List<GrantedAuthority> adminAuthorities = new ArrayList<GrantedAuthority>();
 		adminAuthorities.add(new SimpleGrantedAuthority(Roles.ADMIN));
+		adminAuthorities.add(new SimpleGrantedAuthority(Roles.USER));
 
 		List<GrantedAuthority> userAuthorities = new ArrayList<GrantedAuthority>();
 		adminAuthorities.add(new SimpleGrantedAuthority(Roles.USER));
@@ -42,6 +43,10 @@ public class AuthenticationSystem {
 			}
 			return null;
 		}
+	}
+
+	public User getUserFromName(String name) {
+		return users.get(name.toLowerCase());
 	}
 
 }
