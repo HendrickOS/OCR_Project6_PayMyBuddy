@@ -1,28 +1,47 @@
 package com.example.PayMyBuddy.controller;
 
-import javax.annotation.security.RolesAllowed;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
-import com.example.PayMyBuddy.domain.ContactEntity;
+import com.example.PayMyBuddy.config.JwtConfig;
+import com.example.PayMyBuddy.domain.LoginInformation;
+import com.example.PayMyBuddy.security.AuthenticationSystem;
+import com.example.PayMyBuddy.security.jwt.JwtUtil;
 
-//@RestController
+@RestController
+@CrossOrigin
+@RequestMapping("/login")
 public class LoginController {
 
 	@Autowired
 	ContactController contactController;
 
-	@RolesAllowed("USER")
-	@RequestMapping("/*")
-	public String getUser() {
-		return "Welcome User";
-	}
+	@Autowired
+	AuthenticationSystem authentication;
 
-	@RolesAllowed({ "USER", "ADMIN" })
-	@RequestMapping("/admin")
-	public Iterable<ContactEntity> getAdmin() {
-		return contactController.findAll();
+	@Autowired
+	JwtConfig jwtConfig;
+
+	@PostMapping("/")
+	public String login(@RequestBody LoginInformation information) {
+		User user = authentication.checkUser(information.getUsername(), information.getPassword());
+		if (user == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Bad login information");
+
+		} else
+			try {
+				return JwtUtil.generateToken(user.getUsername(), jwtConfig.getSigningKey(),
+						jwtConfig.getTokenValidity());
+			} catch (Exception e) {
+				throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "An error has occured");
+			}
 	}
 
 }

@@ -7,7 +7,11 @@
 #        show-sql: true
 #        hibernate.ddl-auto: update
 #        properties.hibernate.dialect: org.hibernate.dialect.DerbyTenSevenDialect
-        
+       
+jwt:
+   signingKey: secretkey
+   tokenValidity: 86400
+    
 spring:
     datasource:
         url: jdbc:derby:directory:C://Derby//contact;create=true
@@ -17,3 +21,11 @@ spring:
         show-sql: true
         hibernate.ddl-auto: update
         properties.hibernate.dialect: org.hibernate.dialect.DerbyTenSevenDialect
+        
+---
+
+spring.profiles: francois
+
+spring:
+    datasource:
+        url: jdbc:derby:directory:/films/derby/contact;create=true

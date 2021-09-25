@@ -2,49 +2,53 @@ package com.example.PayMyBuddy.config;
 
 import java.util.Collections;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-@Configuration
+import com.example.PayMyBuddy.security.JwtAuthenticationFilter;
+
 @EnableWebSecurity
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication().withUser("springuser").password(passwordEncoder().encode("user123")).roles("USER")
-				.and().withUser("springadmin").password(passwordEncoder().encode("admin123")).roles("ADMIN", "USER");
-	}
+	// @Override
+	// protected void configure(HttpSecurity http) throws Exception {
+	// http.cors().and().csrf().disable().authorizeRequests().anyRequest().permitAll().and()
+	// .addFilterBefore(new JwtAuthenticationFilter(jwtConfig),
+	// UsernamePasswordAuthenticationFilter.class);
+	//
+	// }
+
+	@Autowired
+	private JwtConfig jwtConfig;
 
 	@Override
-	public void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/admin").hasRole("ADMIN").antMatchers("/user").hasRole("USER")
-				.anyRequest().authenticated().and().formLogin();
-	}
+	protected void configure(HttpSecurity http) throws Exception {
+		http.cors().and().csrf().disable().authorizeRequests()
+				.antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources", "/configuration/security",
+						"/swagger-ui.html", "/webjars/**", "/swagger-resources/configuration/ui", "/swagge‌​r-ui.html",
+						"/test")
+				.permitAll().antMatchers(HttpMethod.POST, "/login/**").permitAll().anyRequest().authenticated().and()
+				.addFilterBefore(new JwtAuthenticationFilter(jwtConfig), UsernamePasswordAuthenticationFilter.class);
 
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
 	}
 
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		final CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(Collections.singletonList(""));
+		configuration.setAllowedOrigins(Collections.singletonList("http://localhost:8081"));
 		configuration.addAllowedMethod("GET");
 		configuration.addAllowedMethod("POST");
 		configuration.addAllowedMethod("PUT");
 		configuration.addAllowedMethod("DELETE");
 		configuration.addAllowedMethod("PATCH");
-		configuration.addAllowedMethod("OPTIONS");
 
 		// setAllowCredentials(true) is important, otherwise:
 		// The value of the 'Access-Control-Allow-Origin' header in the response must
