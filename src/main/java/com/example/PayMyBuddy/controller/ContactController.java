@@ -1,5 +1,7 @@
 package com.example.PayMyBuddy.controller;
 
+import javax.annotation.security.RolesAllowed;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,6 +27,7 @@ public class ContactController {
 	ContactDao contactDao;
 
 	/* Liste de tous les contacts */
+	@RolesAllowed("ADMIN")
 	@GetMapping("/list")
 	public Iterable<ContactEntity> findAll() {
 		return contactDao.findAll();
