@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -39,11 +38,11 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 		this.jwtConfig = new JwtConfig();
 	}
 
-	public JwtAuthenticationFilter(JwtConfig jwtConfig) {
+	public JwtAuthenticationFilter(JwtConfig jwtConfig, AuthenticationSystem authenticationSystem) {
 		this.jwtConfig = jwtConfig;
+		this.authenticationSystem = authenticationSystem;
 	}
 
-	@Autowired
 	AuthenticationSystem authenticationSystem;
 
 	private String generateToken(String userName, Set<String> roles) throws Exception {

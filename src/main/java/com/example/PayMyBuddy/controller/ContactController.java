@@ -34,6 +34,7 @@ public class ContactController {
 	@GetMapping("/list")
 	public Iterable<ContactEntity> findAll() {
 		User user = LoginUtils.getLoggedUser();
+//		return contactDao.findAll(user.getUsername());
 		return contactDao.findAll();
 	}
 

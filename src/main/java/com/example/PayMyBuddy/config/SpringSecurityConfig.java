@@ -13,6 +13,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import com.example.PayMyBuddy.security.AuthenticationSystem;
 import com.example.PayMyBuddy.security.JwtAuthenticationFilter;
 
 @EnableWebSecurity
@@ -29,6 +30,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private JwtConfig jwtConfig;
 
+	@Autowired
+	AuthenticationSystem authenticationSystem;
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable().authorizeRequests()
@@ -36,7 +40,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 						"/swagger-ui.html", "/webjars/**", "/swagger-resources/configuration/ui", "/swagge‌​r-ui.html",
 						"/test")
 				.permitAll().antMatchers(HttpMethod.POST, "/login/**").permitAll().anyRequest().authenticated().and()
-				.addFilterBefore(new JwtAuthenticationFilter(jwtConfig), UsernamePasswordAuthenticationFilter.class);
+				.addFilterBefore(new JwtAuthenticationFilter(jwtConfig, authenticationSystem),
+						UsernamePasswordAuthenticationFilter.class);
 
 	}
 
