@@ -28,4 +28,10 @@ public class UserDAOJDBCImpl implements UserDao {
 		}
 		return result;
 	}
+
+	@Override
+	public UserEntity findByEmail(String email) {
+
+		return userRepository.findByEmail(email);
+	}
 }

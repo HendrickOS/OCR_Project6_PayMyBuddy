@@ -19,4 +19,10 @@ public class UserDaoFileImpl implements UserDao {
 		return null;
 	}
 
+	@Override
+	public UserEntity findByEmail(String email) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
