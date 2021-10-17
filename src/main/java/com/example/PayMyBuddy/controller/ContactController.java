@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.PayMyBuddy.domain.ContactEntity;
+import com.example.PayMyBuddy.domain.UserEntity;
 import com.example.PayMyBuddy.persistence.ContactDao;
 import com.example.PayMyBuddy.persistence.PersistenceException;
+import com.example.PayMyBuddy.persistence.UserDao;
 import com.example.PayMyBuddy.security.LoginUtils;
 import com.example.PayMyBuddy.security.Roles;
 
@@ -30,12 +32,15 @@ public class ContactController {
 	@Autowired
 	ContactDao contactDao;
 
+	@Autowired
+	UserDao userDao;
+
 	@Secured({ Roles.USER })
 	@GetMapping("/list")
 	public Iterable<ContactEntity> findAll() {
 		User user = LoginUtils.getLoggedUser();
-//		return contactDao.findAll(user.getUsername());
-		return contactDao.findAll();
+		UserEntity userEntity = userDao.findByEmail(user.getUsername());
+		return userEntity.getContacts();
 	}
 
 	/* Ajouter un contact */

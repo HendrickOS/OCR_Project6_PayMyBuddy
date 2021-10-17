@@ -7,15 +7,22 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
+import com.example.PayMyBuddy.domain.UserEntity;
+import com.example.PayMyBuddy.persistence.UserDao;
+
 @Component
 public class AuthenticationSystem {
 
-	public static Map<String, User> users = new HashMap<>();
+	public static Map<String, User> admins = new HashMap<>();
+
+	@Autowired
+	UserDao userDao;
 
 	@PostConstruct
 	public void createFakeUsers() {
@@ -24,16 +31,20 @@ public class AuthenticationSystem {
 		adminAuthorities.add(new SimpleGrantedAuthority(Roles.ADMIN));
 		adminAuthorities.add(new SimpleGrantedAuthority(Roles.USER));
 
-		List<GrantedAuthority> userAuthorities = new ArrayList<GrantedAuthority>();
-		adminAuthorities.add(new SimpleGrantedAuthority(Roles.USER));
-
-		users.put("springadmin", new User("springadmin", "admin123", adminAuthorities));
-		users.put("springuser", new User("springuser", "user123", userAuthorities));
+		admins.put("springadmin", new User("springadmin", "admin123", adminAuthorities));
 
 	}
 
 	public User checkUser(String username, String password) {
-		User user = users.get(username.toLowerCase());
+		User user = admins.get(username.toLowerCase());
+		if (user == null) {
+			UserEntity userEntity = userDao.findByEmail(username);
+			if (userEntity != null) {
+				List<GrantedAuthority> userAuthorities = new ArrayList<GrantedAuthority>();
+				userAuthorities.add(new SimpleGrantedAuthority(Roles.USER));
+				user = new User(userEntity.getEmail(), userEntity.getPassword(), userAuthorities);
+			}
+		}
 		if (user == null) {
 			return null;
 		} else {
@@ -46,7 +57,16 @@ public class AuthenticationSystem {
 	}
 
 	public User getUserFromName(String name) {
-		return users.get(name.toLowerCase());
+		User user = admins.get(name.toLowerCase());
+		if (user == null) {
+			UserEntity userEntity = userDao.findByEmail(name);
+			if (userEntity != null) {
+				List<GrantedAuthority> userAuthorities = new ArrayList<GrantedAuthority>();
+				userAuthorities.add(new SimpleGrantedAuthority(Roles.USER));
+				user = new User(userEntity.getEmail(), userEntity.getPassword(), userAuthorities);
+			}
+		}
+		return user;
 	}
 
 }
