@@ -46,8 +46,9 @@ public class ContactController {
 	/* Ajouter un contact */
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ContactEntity addNewContact(@RequestBody ContactEntity contactEntity) {
-		return contactDao.addContact(contactEntity);
+	public Iterable<ContactEntity> addNewContact(@RequestBody ContactEntity contactEntity) {
+		contactDao.addContact(contactEntity);
+		return findAll();
 	}
 
 	/* Mettre à jour un contact */

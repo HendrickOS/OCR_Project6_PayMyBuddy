@@ -10,11 +10,11 @@ public class ContactEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String connections;
+	private String username;
 	private String description;
 	private int amount;
-	private String username;
-	private String email;
+//	private String connections;
+//	private String email;
 
 	public Integer getId() {
 		return id;
@@ -24,13 +24,13 @@ public class ContactEntity {
 		this.id = id;
 	}
 
-	public String getConnections() {
-		return connections;
-	}
-
-	public void setConnections(String connections) {
-		this.connections = connections;
-	}
+//	public String getConnections() {
+//		return connections;
+//	}
+//
+//	public void setConnections(String connections) {
+//		this.connections = connections;
+//	}
 
 	public String getDescription() {
 		return description;
@@ -56,12 +56,12 @@ public class ContactEntity {
 		this.username = username;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
+//	public String getEmail() {
+//		return email;
+//	}
+//
+//	public void setEmail(String email) {
+//		this.email = email;
+//	}
 
 }
