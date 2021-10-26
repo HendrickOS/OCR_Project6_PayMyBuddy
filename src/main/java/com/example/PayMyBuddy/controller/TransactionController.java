@@ -55,4 +55,11 @@ public class TransactionController {
 		transactionDao.supplying();
 	}
 
+	/* Transfert d'un user à un autre */
+	@PostMapping("/transfert")
+	@ResponseStatus(HttpStatus.CREATED)
+	public void sendMoney(@RequestBody TransactionEntity transactionEntity) {
+
+	}
+
 }

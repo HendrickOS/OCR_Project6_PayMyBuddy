@@ -1,5 +1,9 @@
 package com.example.PayMyBuddy.persistence;
 
-public class TransactionRepository {
+import org.springframework.data.repository.CrudRepository;
+
+import com.example.PayMyBuddy.domain.TransactionEntity;
+
+public interface TransactionRepository extends CrudRepository<TransactionEntity, Integer> {
 
 }

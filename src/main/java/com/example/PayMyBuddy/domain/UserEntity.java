@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 @Entity
 public class UserEntity {
@@ -20,11 +21,17 @@ public class UserEntity {
 	private Integer id;
 	private String password;
 	private String email;
+	private int solde;
 
 	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	@JoinTable(name = "User_Contact", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "contact_id") })
 	private Set<ContactEntity> contacts = new HashSet<>();
+
+	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+	@JoinTable(name = "Transaction_User", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "transaction_id") })
+	private Set<TransactionEntity> transactions = new HashSet<>();
 
 	public Integer getId() {
 		return id;
@@ -56,5 +63,21 @@ public class UserEntity {
 
 	public void setContacts(Set<ContactEntity> contacts) {
 		this.contacts = contacts;
+	}
+
+	public int getSolde() {
+		return solde;
+	}
+
+	public void setSolde(int solde) {
+		this.solde = solde;
+	}
+
+	public Set<TransactionEntity> getTransactions() {
+		return transactions;
+	}
+
+	public void setTransactions(Set<TransactionEntity> transactions) {
+		this.transactions = transactions;
 	}
 }

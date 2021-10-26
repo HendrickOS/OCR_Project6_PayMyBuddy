@@ -1,10 +1,13 @@
 package com.example.PayMyBuddy.persistence;
 
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import com.example.PayMyBuddy.domain.ContactEntity;
+import com.example.PayMyBuddy.domain.UserEntity;
 
 @Component
 public class ContactDaoJDBCImpl implements ContactDao {
@@ -18,11 +21,6 @@ public class ContactDaoJDBCImpl implements ContactDao {
 	@Override
 	public Iterable<ContactEntity> findAll() {
 		return contactRepository.findAll();
-	}
-
-	@Override
-	public ContactEntity addContact(ContactEntity contactEntity) {
-		return contactRepository.save(contactEntity);
 	}
 
 	@Override
@@ -43,5 +41,11 @@ public class ContactDaoJDBCImpl implements ContactDao {
 	@Override
 	public void deleteContact(Integer id) {
 		contactRepository.deleteById(id);
+	}
+
+	@Override
+	public Set<ContactEntity> addContact(UserEntity userEntity, ContactEntity contactEntity) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

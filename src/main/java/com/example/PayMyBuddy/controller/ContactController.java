@@ -47,7 +47,10 @@ public class ContactController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Iterable<ContactEntity> addNewContact(@RequestBody ContactEntity contactEntity) {
-		contactDao.addContact(contactEntity);
+		User user = LoginUtils.getLoggedUser();
+		UserEntity userEntity = userDao.findByEmail(user.getUsername());
+		userEntity.getContacts().add(contactEntity);
+		userDao.save(userEntity);
 		return findAll();
 	}
 

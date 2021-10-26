@@ -1,9 +1,17 @@
 package com.example.PayMyBuddy.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class ContactEntity {
@@ -13,8 +21,11 @@ public class ContactEntity {
 	private String username;
 	private String description;
 	private int amount;
-//	private String connections;
-//	private String email;
+
+	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+	@JoinTable(name = "User_Contact", joinColumns = { @JoinColumn(name = "contact_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "user_id") })
+	private Set<UserEntity> users = new HashSet<>();
 
 	public Integer getId() {
 		return id;
@@ -23,14 +34,6 @@ public class ContactEntity {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-//	public String getConnections() {
-//		return connections;
-//	}
-//
-//	public void setConnections(String connections) {
-//		this.connections = connections;
-//	}
 
 	public String getDescription() {
 		return description;
@@ -56,12 +59,12 @@ public class ContactEntity {
 		this.username = username;
 	}
 
-//	public String getEmail() {
-//		return email;
-//	}
-//
-//	public void setEmail(String email) {
-//		this.email = email;
-//	}
+	public Set<UserEntity> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set<UserEntity> users) {
+		this.users = users;
+	}
 
 }
