@@ -17,4 +17,6 @@ public interface ContactDao {
 
 	Set<ContactEntity> addContact(UserEntity userEntity, ContactEntity contactEntity);
 
+	ContactEntity findById(Integer id);
+
 }

@@ -48,4 +48,9 @@ public class ContactDaoJDBCImpl implements ContactDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public ContactEntity findById(Integer id) {
+		return contactRepository.findById(id).get();
+	}
 }

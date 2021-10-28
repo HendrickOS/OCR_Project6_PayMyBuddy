@@ -21,16 +21,14 @@ public class UserEntity {
 	private Integer id;
 	private String password;
 	private String email;
-	private int solde;
+	private Integer solde;
 
 	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	@JoinTable(name = "User_Contact", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "contact_id") })
 	private Set<ContactEntity> contacts = new HashSet<>();
 
-	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
-	@JoinTable(name = "Transaction_User", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "transaction_id") })
+	@OneToMany(targetEntity = TransactionEntity.class, mappedBy = "userEntity")
 	private Set<TransactionEntity> transactions = new HashSet<>();
 
 	public Integer getId() {
@@ -41,6 +39,14 @@ public class UserEntity {
 		this.id = id;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public String getEmail() {
 		return email;
 	}
@@ -49,12 +55,12 @@ public class UserEntity {
 		this.email = email;
 	}
 
-	public String getPassword() {
-		return password;
+	public Integer getSolde() {
+		return solde;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setSolde(Integer solde) {
+		this.solde = solde;
 	}
 
 	public Set<ContactEntity> getContacts() {
@@ -65,14 +71,6 @@ public class UserEntity {
 		this.contacts = contacts;
 	}
 
-	public int getSolde() {
-		return solde;
-	}
-
-	public void setSolde(int solde) {
-		this.solde = solde;
-	}
-
 	public Set<TransactionEntity> getTransactions() {
 		return transactions;
 	}
@@ -80,4 +78,5 @@ public class UserEntity {
 	public void setTransactions(Set<TransactionEntity> transactions) {
 		this.transactions = transactions;
 	}
+
 }
