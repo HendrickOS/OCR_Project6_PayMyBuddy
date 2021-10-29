@@ -47,9 +47,8 @@ public class TransactionDaoJDBCImpl implements TransactionDao {
 	}
 
 	@Override
-	public void supplying() {
-		// TODO Auto-generated method stub
-
+	public void supplying(UserEntity userEntity, Integer montant) {
+		userEntity.setSolde(userEntity.getSolde() + montant);
 	}
 
 }

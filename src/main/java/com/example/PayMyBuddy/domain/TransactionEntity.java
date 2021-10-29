@@ -4,8 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 
 @Entity
 public class TransactionEntity {
@@ -15,15 +13,13 @@ public class TransactionEntity {
 	private Integer id;
 	private int montant;
 
-	@OneToOne
-//	@JoinColumn(name = "idUser", nullable = false)
-	@JoinColumn(name = "user_id", nullable = false)
-	private UserEntity userEntity;
-
-	@OneToOne
-//	@JoinColumn(name = "idContact", nullable = false)
-	@JoinColumn(name = "contact_id", nullable = false)
-	private ContactEntity contactEntity;
+//	@OneToOne
+//	@JoinColumn(name = "user_id", nullable = true)
+//	private UserEntity userEntity;
+//
+//	@OneToOne
+//	@JoinColumn(name = "contact_id", nullable = true)
+//	private ContactEntity contactEntity;
 
 	public Integer getId() {
 		return id;
@@ -41,20 +37,20 @@ public class TransactionEntity {
 		this.montant = montant;
 	}
 
-	public UserEntity getUserEntity() {
-		return userEntity;
-	}
-
-	public void setUserEntity(UserEntity userEntity) {
-		this.userEntity = userEntity;
-	}
-
-	public ContactEntity getContactEntity() {
-		return contactEntity;
-	}
-
-	public void setContactEntity(ContactEntity contactEntity) {
-		this.contactEntity = contactEntity;
-	}
+//	public UserEntity getUserEntity() {
+//		return userEntity;
+//	}
+//
+//	public void setUserEntity(UserEntity userEntity) {
+//		this.userEntity = userEntity;
+//	}
+//
+//	public ContactEntity getContactEntity() {
+//		return contactEntity;
+//	}
+//
+//	public void setContactEntity(ContactEntity contactEntity) {
+//		this.contactEntity = contactEntity;
+//	}
 
 }

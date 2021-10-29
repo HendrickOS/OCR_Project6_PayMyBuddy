@@ -49,6 +49,7 @@ public class ContactController {
 	public Iterable<ContactEntity> addNewContact(@RequestBody ContactEntity contactEntity) {
 		User user = LoginUtils.getLoggedUser();
 		UserEntity userEntity = userDao.findByEmail(user.getUsername());
+//		contactEntity.setUser(userEntity);
 		userEntity.getContacts().add(contactEntity);
 		userDao.save(userEntity);
 		return findAll();
@@ -66,10 +67,22 @@ public class ContactController {
 	}
 
 	/* Supprimer un contact */
-	@DeleteMapping(value = "/{id}")
+	@DeleteMapping(value = "existing/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public void deleteExistingContact(@PathVariable("id") Integer id) {
+	public Iterable<ContactEntity> deleteExistingContact(@PathVariable("id") Integer id) {
 		contactDao.deleteContact(id);
+		return findAll();
+	}
+
+	/* Supprimer un contact */
+	@DeleteMapping(value = "fromlist/{id}")
+	@ResponseStatus(HttpStatus.OK)
+	public Iterable<ContactEntity> deleteContactFromList(@RequestBody ContactEntity contactEntity) {
+		User user = LoginUtils.getLoggedUser();
+		UserEntity userEntity = userDao.findByEmail(user.getUsername());
+		userEntity.getContacts().remove(contactEntity);
+		userDao.save(userEntity);
+		return findAll();
 	}
 
 }

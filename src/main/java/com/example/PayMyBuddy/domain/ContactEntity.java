@@ -1,18 +1,9 @@
 package com.example.PayMyBuddy.domain;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 
 @Entity
 public class ContactEntity {
@@ -23,13 +14,8 @@ public class ContactEntity {
 	private String description;
 	private Integer solde;
 
-	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
-	@JoinTable(name = "User_Contact", joinColumns = { @JoinColumn(name = "contact_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "user_id") })
-	private Set<UserEntity> users = new HashSet<>();
-
-	@OneToMany(targetEntity = TransactionEntity.class, mappedBy = "contactEntity")
-	private Set<TransactionEntity> transactions = new HashSet<>();
+//	@OneToMany(targetEntity = TransactionEntity.class, mappedBy = "contactEntity")
+//	private Set<TransactionEntity> transactions = new HashSet<>();
 
 	public Integer getId() {
 		return id;
@@ -63,20 +49,12 @@ public class ContactEntity {
 		this.solde = solde;
 	}
 
-	public Set<UserEntity> getUsers() {
-		return users;
-	}
-
-	public void setUsers(Set<UserEntity> users) {
-		this.users = users;
-	}
-
-	public Set<TransactionEntity> getTransactions() {
-		return transactions;
-	}
-
-	public void setTransactions(Set<TransactionEntity> transactions) {
-		this.transactions = transactions;
-	}
+//	public Set<TransactionEntity> getTransactions() {
+//		return transactions;
+//	}
+//
+//	public void setTransactions(Set<TransactionEntity> transactions) {
+//		this.transactions = transactions;
+//	}
 
 }

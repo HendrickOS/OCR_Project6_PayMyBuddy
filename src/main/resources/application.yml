@@ -26,6 +26,6 @@ spring:
 
 spring.profiles: hendrick
 
-spring:
-    datasource:
-        url: jdbc:derby:directory:/films/derby/contact;create=true
+#spring:
+#    datasource:
+#        url: jdbc:derby:directory:/films/derby/contact;create=true

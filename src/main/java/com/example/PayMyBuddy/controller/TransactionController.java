@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.PayMyBuddy.domain.ContactEntity;
 import com.example.PayMyBuddy.domain.TransactionEntity;
 import com.example.PayMyBuddy.domain.UserEntity;
 import com.example.PayMyBuddy.persistence.ContactDao;
@@ -53,13 +52,26 @@ public class TransactionController {
 		return transactionDao.sentMoney();
 	}
 
+//	/* Transferer de l'argent d'un user à un contact */
+//	@PostMapping("/transfert")
+//	@ResponseStatus(HttpStatus.CREATED)
+//	public void payment(@RequestBody TransactionEntity transactionEntity) {
+//		User user = LoginUtils.getLoggedUser();
+//		UserEntity userEntity = userDao.findByEmail(user.getUsername());
+//		ContactEntity contactEntity = contactDao.findById(transactionEntity.getContactEntity().getId());
+//		transactionDao.payment(userEntity, contactEntity, transactionEntity.getMontant());
+//		return;
+//
+//	}
+
 	/* Transferer de l'argent d'un user à un contact */
 	@PostMapping("/transfert")
 	@ResponseStatus(HttpStatus.CREATED)
 	public void payment(@RequestBody TransactionEntity transactionEntity) {
 		User user = LoginUtils.getLoggedUser();
 		UserEntity userEntity = userDao.findByEmail(user.getUsername());
-		ContactEntity contactEntity = contactDao.findById(transactionEntity.getContactEntity().getId());
+		userEntity.getTransactions().add(transactionEntity);
+
 		transactionDao.payment(userEntity, contactEntity, transactionEntity.getMontant());
 		return;
 
@@ -68,8 +80,11 @@ public class TransactionController {
 	/* Réapprovisionner son compte PayMyBuddy */
 	@PostMapping("/supplying")
 	@ResponseStatus(HttpStatus.CREATED)
-	public void supplying(@RequestBody TransactionEntity transactionEntity) {
-		transactionDao.supplying();
+	public void supplying(@RequestBody Integer montant) {
+		User user = LoginUtils.getLoggedUser();
+		UserEntity userEntity = userDao.findByEmail(user.getUsername());
+		transactionDao.supplying(userEntity, montant);
+		return;
 	}
 
 }

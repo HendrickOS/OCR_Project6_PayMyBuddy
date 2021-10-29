@@ -3,15 +3,11 @@ package com.example.PayMyBuddy.domain;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -23,13 +19,16 @@ public class UserEntity {
 	private String email;
 	private Integer solde;
 
-	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
-	@JoinTable(name = "User_Contact", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "contact_id") })
+	@OneToMany
+	@JoinColumn(name = "user_id")
 	private Set<ContactEntity> contacts = new HashSet<>();
 
-	@OneToMany(targetEntity = TransactionEntity.class, mappedBy = "userEntity")
+	@OneToMany
+	@JoinColumn(name = "transaction_id")
 	private Set<TransactionEntity> transactions = new HashSet<>();
+
+//	@OneToMany(targetEntity = TransactionEntity.class, mappedBy = "userEntity")
+//	private Set<TransactionEntity> transactions = new HashSet<>();
 
 	public Integer getId() {
 		return id;

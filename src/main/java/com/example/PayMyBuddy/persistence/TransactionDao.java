@@ -16,6 +16,6 @@ public interface TransactionDao {
 
 	void payment(UserEntity userEntity, ContactEntity contactEntity, int montant);
 
-	void supplying();
+	void supplying(UserEntity userEntity, Integer montant);
 
 }
