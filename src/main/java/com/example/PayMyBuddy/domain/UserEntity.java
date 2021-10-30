@@ -3,6 +3,7 @@ package com.example.PayMyBuddy.domain;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,12 +20,12 @@ public class UserEntity {
 	private String email;
 	private Integer solde;
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
 	private Set<ContactEntity> contacts = new HashSet<>();
 
-	@OneToMany
-	@JoinColumn(name = "transaction_id")
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "user_id")
 	private Set<TransactionEntity> transactions = new HashSet<>();
 
 //	@OneToMany(targetEntity = TransactionEntity.class, mappedBy = "userEntity")

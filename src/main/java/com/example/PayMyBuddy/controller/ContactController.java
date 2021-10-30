@@ -37,7 +37,7 @@ public class ContactController {
 
 	@Secured({ Roles.USER })
 	@GetMapping("/list")
-	public Iterable<ContactEntity> findAll() {
+	public Iterable<ContactEntity> findAllContacts() {
 		User user = LoginUtils.getLoggedUser();
 		UserEntity userEntity = userDao.findByEmail(user.getUsername());
 		return userEntity.getContacts();
@@ -52,7 +52,7 @@ public class ContactController {
 //		contactEntity.setUser(userEntity);
 		userEntity.getContacts().add(contactEntity);
 		userDao.save(userEntity);
-		return findAll();
+		return findAllContacts();
 	}
 
 	/* Mettre à jour un contact */
@@ -71,7 +71,7 @@ public class ContactController {
 	@ResponseStatus(HttpStatus.OK)
 	public Iterable<ContactEntity> deleteExistingContact(@PathVariable("id") Integer id) {
 		contactDao.deleteContact(id);
-		return findAll();
+		return findAllContacts();
 	}
 
 	/* Supprimer un contact */
@@ -82,7 +82,7 @@ public class ContactController {
 		UserEntity userEntity = userDao.findByEmail(user.getUsername());
 		userEntity.getContacts().remove(contactEntity);
 		userDao.save(userEntity);
-		return findAll();
+		return findAllContacts();
 	}
 
 }

@@ -16,9 +16,8 @@ public class TransactionDaoJDBCImpl implements TransactionDao {
 	TransactionRepository transactionRepository;
 
 	@Override
-	public List<TransactionEntity> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public Iterable<TransactionEntity> findAll() {
+		return transactionRepository.findAll();
 	}
 
 	@Override
@@ -33,22 +32,28 @@ public class TransactionDaoJDBCImpl implements TransactionDao {
 		return null;
 	}
 
-	@Override
-	public void payment(UserEntity userEntity, ContactEntity contactEntity, int montant) {
-		if (userEntity.getSolde() >= montant) {
-			userEntity.setSolde(userEntity.getSolde() - montant);
-			contactEntity.setSolde(contactEntity.getSolde() + montant);
-		}
-		TransactionEntity transactionEntity = new TransactionEntity();
-		transactionEntity.setMontant(montant);
-		transactionEntity.setContactEntity(contactEntity);
-		transactionEntity.setUserEntity(userEntity);
-		transactionRepository.save(transactionEntity);
-	}
+//	@Override
+//	public void payment(UserEntity userEntity, ContactEntity contactEntity, int montant) {
+//		if (userEntity.getSolde() >= montant) {
+//			userEntity.setSolde(userEntity.getSolde() - montant);
+//			contactEntity.setSolde(contactEntity.getSolde() + montant);
+//		}
+//		TransactionEntity transactionEntity = new TransactionEntity();
+//		transactionEntity.setMontant(montant);
+//		transactionEntity.setContactEntity(contactEntity);
+//		transactionEntity.setUserEntity(userEntity);
+//		transactionRepository.save(transactionEntity);
+//	}
 
 	@Override
 	public void supplying(UserEntity userEntity, Integer montant) {
 		userEntity.setSolde(userEntity.getSolde() + montant);
+	}
+
+	@Override
+	public void payment(UserEntity userEntity, ContactEntity contactEntity, int montant) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

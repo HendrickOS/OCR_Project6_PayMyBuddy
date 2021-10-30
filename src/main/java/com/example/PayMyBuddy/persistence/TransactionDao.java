@@ -8,7 +8,7 @@ import com.example.PayMyBuddy.domain.UserEntity;
 
 public interface TransactionDao {
 
-	List<TransactionEntity> findAll();
+	Iterable<TransactionEntity> findAll();
 
 	List<TransactionEntity> receivedMoney();
 

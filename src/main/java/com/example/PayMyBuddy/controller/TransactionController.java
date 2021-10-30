@@ -1,6 +1,7 @@
 package com.example.PayMyBuddy.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.PayMyBuddy.domain.ContactEntity;
 import com.example.PayMyBuddy.domain.TransactionEntity;
 import com.example.PayMyBuddy.domain.UserEntity;
 import com.example.PayMyBuddy.persistence.ContactDao;
@@ -36,8 +38,10 @@ public class TransactionController {
 
 	/* Liste de toutes les transactions (envoyé et reçu) */
 	@GetMapping("/list")
-	public List<TransactionEntity> findAll() {
-		return transactionDao.findAll();
+	public Iterable<TransactionEntity> findAllTransactions() {
+		User user = LoginUtils.getLoggedUser();
+		UserEntity userEntity = userDao.findByEmail(user.getUsername());
+		return userEntity.getTransactions();
 	}
 
 	/* Liste des transactions reçues */
@@ -67,14 +71,31 @@ public class TransactionController {
 	/* Transferer de l'argent d'un user à un contact */
 	@PostMapping("/transfert")
 	@ResponseStatus(HttpStatus.CREATED)
-	public void payment(@RequestBody TransactionEntity transactionEntity) {
+	public Iterable<TransactionEntity> payment(@RequestBody TransactionEntity transactionEntity) {
 		User user = LoginUtils.getLoggedUser();
 		UserEntity userEntity = userDao.findByEmail(user.getUsername());
+
 		userEntity.getTransactions().add(transactionEntity);
 
-		transactionDao.payment(userEntity, contactEntity, transactionEntity.getMontant());
-		return;
+		ContactEntity contact = getContactFromId(userEntity, transactionEntity.getContactEntity().getId());
+//		ContactEntity contact = transactionEntity.getContactEntity();
+		contact.setSolde(contact.getSolde() + transactionEntity.getMontant());
 
+		userEntity.setSolde(userEntity.getSolde() - transactionEntity.getMontant());
+
+		userDao.save(userEntity);
+		return findAllTransactions();
+
+	}
+
+	private ContactEntity getContactFromId(UserEntity userEntity, Integer id) {
+		Set<ContactEntity> contacts = userEntity.getContacts();
+		for (ContactEntity contactEntity : contacts) {
+			if (contactEntity.getId().equals(id)) {
+				return contactEntity;
+			}
+		}
+		return null;
 	}
 
 	/* Réapprovisionner son compte PayMyBuddy */
@@ -83,7 +104,9 @@ public class TransactionController {
 	public void supplying(@RequestBody Integer montant) {
 		User user = LoginUtils.getLoggedUser();
 		UserEntity userEntity = userDao.findByEmail(user.getUsername());
-		transactionDao.supplying(userEntity, montant);
+
+		userEntity.setSolde(userEntity.getSolde() + montant);
+//		transactionDao.supplying(userEntity, montant);
 		return;
 	}
 
