@@ -110,4 +110,31 @@ public class TransactionController {
 		return;
 	}
 
+	/* *********************************************************** */
+	/*
+	 * NOUVELLE VERSION AVEC UN SET DE USER EN TANT QUE CONTACTS DU USER CONNECTE /*
+	 * ***********************************************************
+	 */
+	/* Transferer de l'argent d'un user à un contact */
+//	@PostMapping("/transfert2")
+//	@ResponseStatus(HttpStatus.CREATED)
+//	public Iterable<TransactionEntity> payment2(@RequestBody TransactionEntity transactionEntity) {
+//		User user = LoginUtils.getLoggedUser();
+//		UserEntity currentUser = userDao.findByEmail(user.getUsername());
+//
+//		currentUser.getTransactions().add(transactionEntity);
+//
+//		ContactEntity contact = getContactFromId(userEntity, transactionEntity.getContactEntity().getId());
+////		ContactEntity contact = transactionEntity.getContactEntity();
+//		Set<UserEntity> contacts = currentUser.getContacts();
+//		for (UserEntity contact : contacts) {
+//			if (contact.getId().equals(transactionEntity.getUserEntity.getId())) {
+//				contact.setSolde(contact.getSolde() + transactionEntity.getMontant());
+//				currentUser.setSolde(currentUser.getSolde() - transactionEntity.getMontant());
+//			}
+//		}
+//		userDao.save(currentUser);
+//
+//	}
+
 }

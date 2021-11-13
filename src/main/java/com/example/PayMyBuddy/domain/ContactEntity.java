@@ -14,9 +14,6 @@ public class ContactEntity {
 	private String description;
 	private Integer solde;
 
-//	@OneToMany(targetEntity = TransactionEntity.class, mappedBy = "contactEntity")
-//	private Set<TransactionEntity> transactions = new HashSet<>();
-
 	public Integer getId() {
 		return id;
 	}
@@ -48,13 +45,5 @@ public class ContactEntity {
 	public void setSolde(Integer solde) {
 		this.solde = solde;
 	}
-
-//	public Set<TransactionEntity> getTransactions() {
-//		return transactions;
-//	}
-//
-//	public void setTransactions(Set<TransactionEntity> transactions) {
-//		this.transactions = transactions;
-//	}
 
 }

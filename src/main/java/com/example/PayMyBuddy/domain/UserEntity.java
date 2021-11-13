@@ -16,9 +16,12 @@ public class UserEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String password;
+	private String username;
 	private String email;
+	private String password;
 	private Integer solde;
+
+//	private Set<UserEntity> contacts;
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
@@ -27,9 +30,6 @@ public class UserEntity {
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
 	private Set<TransactionEntity> transactions = new HashSet<>();
-
-//	@OneToMany(targetEntity = TransactionEntity.class, mappedBy = "userEntity")
-//	private Set<TransactionEntity> transactions = new HashSet<>();
 
 	public Integer getId() {
 		return id;
@@ -77,6 +77,14 @@ public class UserEntity {
 
 	public void setTransactions(Set<TransactionEntity> transactions) {
 		this.transactions = transactions;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 }
