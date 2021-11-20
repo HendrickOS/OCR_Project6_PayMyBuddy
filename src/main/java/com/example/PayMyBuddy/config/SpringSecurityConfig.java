@@ -39,7 +39,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources", "/configuration/security",
 						"/swagger-ui.html", "/webjars/**", "/swagger-resources/configuration/ui", "/swagge‌​r-ui.html",
 						"/test")
-				.permitAll().antMatchers(HttpMethod.POST, "/login/**").permitAll().anyRequest().authenticated().and()
+				.permitAll().antMatchers(HttpMethod.POST, "/login/**").permitAll()
+				.antMatchers(HttpMethod.POST, "/users/").permitAll().anyRequest().authenticated().and()
 				.addFilterBefore(new JwtAuthenticationFilter(jwtConfig, authenticationSystem),
 						UsernamePasswordAuthenticationFilter.class);
 

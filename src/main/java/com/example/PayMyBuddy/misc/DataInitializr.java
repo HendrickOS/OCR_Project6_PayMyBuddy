@@ -1,21 +1,14 @@
 package com.example.PayMyBuddy.misc;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.example.PayMyBuddy.domain.UserEntity;
-import com.example.PayMyBuddy.persistence.ContactDaoJDBCImpl;
 import com.example.PayMyBuddy.persistence.UserDao;
 
 @Component
 public class DataInitializr {
 	@Autowired
 	UserDao userDAO;
-
-	@Autowired
-	ContactDaoJDBCImpl contactDAO;
 
 //	@PostConstruct
 //	public void init() {
@@ -34,11 +27,11 @@ public class DataInitializr {
 //		userDAO.save(user);
 //	}
 
-	@PostConstruct
-	public void init3() {
-		UserEntity findByEmail = userDAO.findByEmail("springuser");
-		System.out.println("coucou");
-	}
+//	@PostConstruct
+//	public void init3() {
+//		UserEntity findByEmail = userDAO.findByEmail("springuser");
+//		System.out.println("coucou");
+//	}
 
 //	@PostConstruct
 //	public void init2() {

@@ -38,7 +38,7 @@ public class AuthenticationSystem {
 	public User checkUser(String username, String password) {
 		User user = admins.get(username.toLowerCase());
 		if (user == null) {
-			UserEntity userEntity = userDao.findByEmail(username);
+			UserEntity userEntity = userDao.findByUsername(username);
 			if (userEntity != null) {
 				List<GrantedAuthority> userAuthorities = new ArrayList<GrantedAuthority>();
 				userAuthorities.add(new SimpleGrantedAuthority(Roles.USER));
@@ -59,7 +59,7 @@ public class AuthenticationSystem {
 	public User getUserFromName(String name) {
 		User user = admins.get(name.toLowerCase());
 		if (user == null) {
-			UserEntity userEntity = userDao.findByEmail(name);
+			UserEntity userEntity = userDao.findByUsername(name);
 			if (userEntity != null) {
 				List<GrantedAuthority> userAuthorities = new ArrayList<GrantedAuthority>();
 				userAuthorities.add(new SimpleGrantedAuthority(Roles.USER));

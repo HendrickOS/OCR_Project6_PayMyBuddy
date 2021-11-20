@@ -21,9 +21,6 @@ import com.example.PayMyBuddy.security.jwt.JwtUtil;
 public class LoginController {
 
 	@Autowired
-	ContactController contactController;
-
-	@Autowired
 	AuthenticationSystem authentication;
 
 	@Autowired

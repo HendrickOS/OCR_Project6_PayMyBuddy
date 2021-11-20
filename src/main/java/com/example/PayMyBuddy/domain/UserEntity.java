@@ -12,7 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 @Entity
-public class UserEntity {
+public class UserEntity implements Comparable<UserEntity> {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -21,11 +21,9 @@ public class UserEntity {
 	private String password;
 	private Integer solde;
 
-//	private Set<UserEntity> contacts;
-
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
-	private Set<ContactEntity> contacts = new HashSet<>();
+	private Set<UserEntity> contacts = new HashSet<>();
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
@@ -63,11 +61,11 @@ public class UserEntity {
 		this.solde = solde;
 	}
 
-	public Set<ContactEntity> getContacts() {
+	public Set<UserEntity> getContacts() {
 		return contacts;
 	}
 
-	public void setContacts(Set<ContactEntity> contacts) {
+	public void setContacts(Set<UserEntity> contacts) {
 		this.contacts = contacts;
 	}
 
@@ -85,6 +83,11 @@ public class UserEntity {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	@Override
+	public int compareTo(UserEntity o) {
+		return getUsername().compareToIgnoreCase(o.getUsername());
 	}
 
 }

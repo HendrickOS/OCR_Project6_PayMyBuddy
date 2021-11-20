@@ -16,12 +16,8 @@ public class TransactionEntity {
 	private int montant;
 
 	@OneToOne
-	@JoinColumn(name = "contact_id", nullable = true)
-	private ContactEntity contactEntity;
-
-//	@OneToOne
-//	@JoinColumn(name = "contact_id", nullable = true)
-//	private UserEntity userEntity;
+	@JoinColumn(name = "user_id", nullable = true)
+	private UserEntity userEntity;
 
 	public Integer getId() {
 		return id;
@@ -39,20 +35,20 @@ public class TransactionEntity {
 		this.montant = montant;
 	}
 
-	public ContactEntity getContactEntity() {
-		return contactEntity;
-	}
-
-	public void setContactEntity(ContactEntity contactEntity) {
-		this.contactEntity = contactEntity;
-	}
-
-//	public UserEntity getUserEntity() {
-//		return userEntity;
+//	public ContactEntity getContactEntity() {
+//		return contactEntity;
 //	}
 //
-//	public void setUserEntity(UserEntity userEntity) {
-//		this.userEntity = userEntity;
+//	public void setContactEntity(ContactEntity contactEntity) {
+//		this.contactEntity = contactEntity;
 //	}
+
+	public UserEntity getUserEntity() {
+		return userEntity;
+	}
+
+	public void setUserEntity(UserEntity userEntity) {
+		this.userEntity = userEntity;
+	}
 
 }

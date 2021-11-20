@@ -10,6 +10,6 @@ public interface UserDao {
 
 	List<UserEntity> findAll();
 
-	UserEntity findByEmail(String email);
+	UserEntity findByUsername(String username);
 
 }

@@ -20,7 +20,7 @@ public class UserDaoFileImpl implements UserDao {
 	}
 
 	@Override
-	public UserEntity findByEmail(String email) {
+	public UserEntity findByUsername(String username) {
 		// TODO Auto-generated method stub
 		return null;
 	}

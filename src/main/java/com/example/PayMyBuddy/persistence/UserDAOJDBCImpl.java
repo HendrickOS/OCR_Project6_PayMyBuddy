@@ -33,8 +33,8 @@ public class UserDAOJDBCImpl implements UserDao {
 	}
 
 	@Override
-	public UserEntity findByEmail(String email) {
+	public UserEntity findByUsername(String username) {
 
-		return userRepository.findByEmail(email);
+		return userRepository.findByUsername(username);
 	}
 }

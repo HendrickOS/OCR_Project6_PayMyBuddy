@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.example.PayMyBuddy.domain.ContactEntity;
 import com.example.PayMyBuddy.domain.TransactionEntity;
 import com.example.PayMyBuddy.domain.UserEntity;
 
@@ -50,10 +49,10 @@ public class TransactionDaoJDBCImpl implements TransactionDao {
 		userEntity.setSolde(userEntity.getSolde() + montant);
 	}
 
-	@Override
-	public void payment(UserEntity userEntity, ContactEntity contactEntity, int montant) {
-		// TODO Auto-generated method stub
-
-	}
+//	@Override
+//	public void payment(UserEntity userEntity, ContactEntity contactEntity, int montant) {
+//		// TODO Auto-generated method stub
+//
+//	}
 
 }
