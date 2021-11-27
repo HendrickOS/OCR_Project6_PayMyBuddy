@@ -6,7 +6,6 @@ import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.PayMyBuddy.domain.UserEntity;
 import com.example.PayMyBuddy.persistence.UserDao;
 import com.example.PayMyBuddy.security.LoginUtils;
-import com.example.PayMyBuddy.security.Roles;
 
 @RestController
 @CrossOrigin
@@ -33,7 +31,7 @@ public class UserController {
 
 	/* Récupérer le solde du user connecté */
 	@GetMapping("/solde")
-	public Integer getUserSolde() {
+	public Double getUserSolde() {
 		User user = LoginUtils.getLoggedUser();
 		UserEntity currentUser = userDao.findByUsername(user.getUsername());
 		return currentUser.getSolde();
@@ -68,6 +66,17 @@ public class UserController {
 		userEntity.setSolde(0);
 		userDao.save(userEntity);
 		System.out.print("User crée");
+		return;
+	}
+
+	/* Réapprovisionner son compte PayMyBuddy */
+	@PostMapping("/supplying")
+	@ResponseStatus(HttpStatus.CREATED)
+	public void supplying(@RequestBody Integer montant) {
+		User user = LoginUtils.getLoggedUser();
+		UserEntity currentUser = userDao.findByUsername(user.getUsername());
+
+		currentUser.setSolde(currentUser.getSolde() + montant);
 		return;
 	}
 
@@ -108,7 +117,7 @@ public class UserController {
 	/***************************************************************/
 
 	/* Récupérer la liste des contacts du user connecté */
-	@Secured({ Roles.USER })
+//	@Secured({ Roles.USER })
 	@GetMapping("/contacts/list")
 	public Iterable<UserEntity> findAllUserContacts() {
 		User user = LoginUtils.getLoggedUser();

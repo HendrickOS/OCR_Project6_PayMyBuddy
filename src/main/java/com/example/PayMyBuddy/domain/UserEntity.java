@@ -19,7 +19,7 @@ public class UserEntity implements Comparable<UserEntity> {
 	private String username;
 	private String email;
 	private String password;
-	private Integer solde;
+	private Double solde;
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
@@ -53,12 +53,12 @@ public class UserEntity implements Comparable<UserEntity> {
 		this.email = email;
 	}
 
-	public Integer getSolde() {
+	public Double getSolde() {
 		return solde;
 	}
 
-	public void setSolde(Integer solde) {
-		this.solde = solde;
+	public void setSolde(double d) {
+		this.solde = d;
 	}
 
 	public Set<UserEntity> getContacts() {

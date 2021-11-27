@@ -1,6 +1,5 @@
 package com.example.PayMyBuddy.controller;
 
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,29 +38,6 @@ public class TransactionController {
 		return currentUser.getTransactions();
 	}
 
-	/* Liste des transactions reçues */
-	@GetMapping("/receiptlist")
-	public List<TransactionEntity> receivedMoney() {
-		return transactionDao.receivedMoney();
-	}
-
-	/* Liste des transactions sorties */
-	@GetMapping("/sentlist")
-	public List<TransactionEntity> sentMoney() {
-		return transactionDao.sentMoney();
-	}
-
-	/* Réapprovisionner son compte PayMyBuddy */
-	@PostMapping("/supplying")
-	@ResponseStatus(HttpStatus.CREATED)
-	public void supplying(@RequestBody Integer montant) {
-		User user = LoginUtils.getLoggedUser();
-		UserEntity currentUser = userDao.findByUsername(user.getUsername());
-
-		currentUser.setSolde(currentUser.getSolde() + montant);
-		return;
-	}
-
 	/* *********************************************************** */
 	/* NOUVELLE VERSION AVEC UN SET DE USER EN TANT QUE CONTACTS DU USER CONNECTE */
 	/* *********************************************************** */
@@ -80,8 +56,14 @@ public class TransactionController {
 		for (UserEntity contact : contacts) {
 			if (contact.getId().equals(transactionEntity.getUserEntity().getId())) {
 				contact.setSolde(contact.getSolde() + transactionEntity.getMontant());
-				currentUser.setSolde(currentUser.getSolde() - transactionEntity.getMontant());
-//				userDao.save(contact);
+				currentUser.setSolde(currentUser.getSolde() - (transactionEntity.getMontant() * 1.005));
+				userDao.save(contact);
+				for (UserEntity admin : contacts) {
+					if (admin.getUsername().equals("admin")) {
+						admin.setSolde(admin.getSolde() + (transactionEntity.getMontant() * 0.005));
+						userDao.save(admin);
+					}
+				}
 			}
 		}
 		userDao.save(currentUser);
