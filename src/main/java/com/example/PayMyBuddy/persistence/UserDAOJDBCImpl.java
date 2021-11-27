@@ -37,4 +37,9 @@ public class UserDAOJDBCImpl implements UserDao {
 
 		return userRepository.findByUsername(username);
 	}
+
+	@Override
+	public UserEntity findById(Integer id) {
+		return userRepository.findById(id).get();
+	}
 }

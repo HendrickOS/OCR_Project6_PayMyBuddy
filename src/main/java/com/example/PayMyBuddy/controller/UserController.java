@@ -53,7 +53,9 @@ public class UserController {
 		Set<UserEntity> result = new TreeSet<>();
 		for (UserEntity userEntity : findAll) {
 			if (userEntity.compareTo(currentUser) != 0) {
-				result.add(userEntity);
+				if (!currentUser.hasContact(userEntity)) {
+					result.add(userEntity);
+				}
 			}
 		}
 		return result;
@@ -131,7 +133,8 @@ public class UserController {
 	public Iterable<UserEntity> addNewContact(@RequestBody UserEntity userEntity) {
 		User user = LoginUtils.getLoggedUser();
 		UserEntity currentUser = userDao.findByUsername(user.getUsername());
-		currentUser.getContacts().add(userEntity);
+		UserEntity newContact = userDao.findById(userEntity.getId());
+		currentUser.getContacts().add(newContact);
 		userDao.save(currentUser);
 		return findAllUserContacts();
 	}

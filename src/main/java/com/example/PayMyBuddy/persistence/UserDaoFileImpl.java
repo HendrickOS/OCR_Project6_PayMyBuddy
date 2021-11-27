@@ -25,4 +25,10 @@ public class UserDaoFileImpl implements UserDao {
 		return null;
 	}
 
+	@Override
+	public UserEntity findById(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

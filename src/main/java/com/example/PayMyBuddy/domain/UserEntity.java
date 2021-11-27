@@ -90,4 +90,13 @@ public class UserEntity implements Comparable<UserEntity> {
 		return getUsername().compareToIgnoreCase(o.getUsername());
 	}
 
+	public boolean hasContact(UserEntity userEntity) {
+		for (UserEntity contact : contacts) {
+			if (contact.getId().equals(userEntity.getId())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 }

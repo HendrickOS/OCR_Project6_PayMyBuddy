@@ -12,4 +12,6 @@ public interface UserDao {
 
 	UserEntity findByUsername(String username);
 
+	UserEntity findById(Integer id);
+
 }
