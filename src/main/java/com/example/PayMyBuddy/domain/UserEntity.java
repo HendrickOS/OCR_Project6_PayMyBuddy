@@ -20,10 +20,17 @@ public class UserEntity implements Comparable<UserEntity> {
 	private String email;
 	private String password;
 	private Double solde;
+	private String description;
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
 	private Set<UserEntity> contacts = new HashSet<>();
+
+//	@ManyToMany
+//    @JoinTable( name = "Users_of_user",
+//                joinColumns = @JoinColumn( name = "user_id" ),
+//                inverseJoinColumns = @JoinColumn( name = "contact_id" ))
+//	private Set<UserEntity> contacts = new HashSet<>();
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
@@ -97,6 +104,14 @@ public class UserEntity implements Comparable<UserEntity> {
 			}
 		}
 		return false;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }
