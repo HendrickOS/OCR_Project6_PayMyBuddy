@@ -88,20 +88,19 @@ public class UserController {
 	public void updateInfoUser(@RequestBody UserEntity userEntity) {
 		User user = LoginUtils.getLoggedUser();
 		UserEntity userCurrent = userDao.findByUsername(user.getUsername());
-		if (userEntity.getUsername() != null) {
+		if (userEntity.getUsername() != "") {
 			userCurrent.setUsername(userEntity.getUsername());
 		}
-		if (userEntity.getEmail() != null) {
+		if (userEntity.getEmail() != "") {
 			userCurrent.setEmail(userEntity.getEmail());
 		}
-		if (userEntity.getSolde() != null) {
-			userCurrent.setSolde(userEntity.getSolde());
+		if (userEntity.getDescription() != "") {
+			userCurrent.setDescription(userEntity.getDescription());
 		}
-		if (userEntity.getPassword() != null) {
+		if (userEntity.getPassword() != "") {
 			userCurrent.setPassword(userEntity.getPassword());
 		}
 		userDao.save(userCurrent);
-		System.out.print("User mis à jour");
 		return;
 	}
 

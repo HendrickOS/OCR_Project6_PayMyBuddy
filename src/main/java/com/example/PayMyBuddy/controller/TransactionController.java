@@ -1,5 +1,6 @@
 package com.example.PayMyBuddy.controller;
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,7 @@ public class TransactionController {
 		User user = LoginUtils.getLoggedUser();
 		UserEntity currentUser = userDao.findByUsername(user.getUsername());
 		double taxe = 1.005;
+		List<UserEntity> allUsers = userDao.findAll();
 
 		currentUser.getTransactions().add(transactionEntity);
 
@@ -58,7 +60,8 @@ public class TransactionController {
 				contact.setSolde(contact.getSolde() + transactionEntity.getMontant());
 				currentUser.setSolde(currentUser.getSolde() - (transactionEntity.getMontant() * 1.005));
 				userDao.save(contact);
-				for (UserEntity admin : contacts) {
+
+				for (UserEntity admin : allUsers) {
 					if (admin.getUsername().equals("admin")) {
 						admin.setSolde(admin.getSolde() + (transactionEntity.getMontant() * 0.005));
 						userDao.save(admin);
