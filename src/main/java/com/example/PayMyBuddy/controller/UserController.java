@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.User;
@@ -88,16 +89,16 @@ public class UserController {
 	public void updateInfoUser(@RequestBody UserEntity userEntity) {
 		User user = LoginUtils.getLoggedUser();
 		UserEntity userCurrent = userDao.findByUsername(user.getUsername());
-		if (userEntity.getUsername() != "") {
+		if (!StringUtils.isBlank(userEntity.getUsername())) {
 			userCurrent.setUsername(userEntity.getUsername());
 		}
-		if (userEntity.getEmail() != "") {
+		if (!StringUtils.isBlank(userEntity.getEmail())) {
 			userCurrent.setEmail(userEntity.getEmail());
 		}
-		if (userEntity.getDescription() != "") {
+		if (!StringUtils.isBlank(userEntity.getDescription())) {
 			userCurrent.setDescription(userEntity.getDescription());
 		}
-		if (userEntity.getPassword() != "") {
+		if (!StringUtils.isBlank(userEntity.getPassword())) {
 			userCurrent.setPassword(userEntity.getPassword());
 		}
 		userDao.save(userCurrent);
