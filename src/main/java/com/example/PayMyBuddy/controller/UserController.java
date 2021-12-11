@@ -46,7 +46,7 @@ public class UserController {
 		return currentUser.getUsername();
 	}
 
-	@GetMapping("/list")
+	@GetMapping("/allusersbutme")
 	public Set<UserEntity> getAllUsersButMe() {
 		User user = LoginUtils.getLoggedUser();
 		UserEntity currentUser = userDao.findByUsername(user.getUsername());
@@ -125,6 +125,10 @@ public class UserController {
 	public Iterable<UserEntity> findAllUserContacts() {
 		User user = LoginUtils.getLoggedUser();
 		UserEntity currentUser = userDao.findByUsername(user.getUsername());
+		System.out.println(currentUser.getContacts().size());
+		for (UserEntity contact : currentUser.getContacts()) {
+			contact.setContacts(null);
+		}
 		return currentUser.getContacts();
 	}
 

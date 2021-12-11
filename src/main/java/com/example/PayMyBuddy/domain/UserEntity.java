@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class UserEntity implements Comparable<UserEntity> {
@@ -28,8 +31,9 @@ public class UserEntity implements Comparable<UserEntity> {
 //	@JoinColumn(name = "user_id")
 //	private Set<UserEntity> contacts = new HashSet<>();
 
-	@ManyToMany(cascade = CascadeType.PERSIST)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "Contacts_of_User", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "contact_id"))
+	@JsonIgnoreProperties("contacts")
 	private Set<UserEntity> contacts = new HashSet<>();
 
 	@OneToMany(cascade = CascadeType.ALL)
