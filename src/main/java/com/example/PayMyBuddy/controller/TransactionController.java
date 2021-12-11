@@ -39,6 +39,12 @@ public class TransactionController {
 		return currentUser.getTransactions();
 	}
 
+	/* Montant TTC de la transaction */
+	@GetMapping("/ttcamount")
+	public double montantTtc(double montant) {
+		return montant * 1.005;
+	}
+
 	/* Montant total récupéré par PMB avec les taxes sur les transactions */
 	@GetMapping("/taxemoney")
 	public double payMyBuddyMoney() {
