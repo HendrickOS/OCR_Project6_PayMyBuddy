@@ -31,12 +31,28 @@ public class TransactionController {
 	@Autowired
 	UserDao userDao;
 
-	/* Liste de toutes les transactions (envoyé et reçu) */
+	/* Liste de toutes les transactions du User connecté */
 	@GetMapping("/list")
 	public Iterable<TransactionEntity> findAllTransactions() {
 		User user = LoginUtils.getLoggedUser();
 		UserEntity currentUser = userDao.findByUsername(user.getUsername());
 		return currentUser.getTransactions();
+	}
+
+	/* Montant total récupéré par PMB avec les taxes sur les transactions */
+	@GetMapping("/taxemoney")
+	public double payMyBuddyMoney() {
+		double result;
+		double somme = 0;
+		List<UserEntity> allUsers = userDao.findAll();
+		for (UserEntity user : allUsers) {
+			Set<TransactionEntity> allTransactions = user.getTransactions();
+			for (TransactionEntity transactions : allTransactions) {
+				somme = somme + transactions.getMontant();
+			}
+		}
+		result = somme * 0.005;
+		return result;
 	}
 
 	/* *********************************************************** */

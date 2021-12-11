@@ -75,12 +75,13 @@ public class UserController {
 	/* Réapprovisionner son compte PayMyBuddy */
 	@PostMapping("/supplying")
 	@ResponseStatus(HttpStatus.CREATED)
-	public void supplying(@RequestBody Integer montant) {
+	public Double supplying(@RequestBody Integer montant) {
 		User user = LoginUtils.getLoggedUser();
 		UserEntity currentUser = userDao.findByUsername(user.getUsername());
 
 		currentUser.setSolde(currentUser.getSolde() + montant);
-		return;
+		userDao.save(currentUser);
+		return getUserSolde();
 	}
 
 	/* Mettre à jour le user connecté */

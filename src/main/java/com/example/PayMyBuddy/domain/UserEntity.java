@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -22,15 +24,13 @@ public class UserEntity implements Comparable<UserEntity> {
 	private Double solde;
 	private String description;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "user_id")
-	private Set<UserEntity> contacts = new HashSet<>();
-
-//	@ManyToMany
-//    @JoinTable( name = "Contacts_of_User",
-//                joinColumns = @JoinColumn( name = "user_id" ),
-//                inverseJoinColumns = @JoinColumn( name = "contact_id" ))
+//	@OneToMany(cascade = CascadeType.ALL)
+//	@JoinColumn(name = "user_id")
 //	private Set<UserEntity> contacts = new HashSet<>();
+
+	@ManyToMany(cascade = CascadeType.PERSIST)
+	@JoinTable(name = "Contacts_of_User", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "contact_id"))
+	private Set<UserEntity> contacts = new HashSet<>();
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
