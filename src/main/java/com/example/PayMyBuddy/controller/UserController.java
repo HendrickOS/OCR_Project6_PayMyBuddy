@@ -30,7 +30,9 @@ public class UserController {
 	@Autowired
 	UserDao userDao;
 
-	/* Récupérer le solde du user connecté */
+	/**
+	 * Récupérer le solde du user connecté
+	 **/
 	@GetMapping("/solde")
 	public Double getUserSolde() {
 		User user = LoginUtils.getLoggedUser();
@@ -38,7 +40,9 @@ public class UserController {
 		return currentUser.getSolde();
 	}
 
-	/* Récupérer le username du user connecté */
+	/**
+	 * Récupérer le username du user connecté
+	 **/
 	@GetMapping("/username")
 	public String getUserUsername() {
 		User user = LoginUtils.getLoggedUser();
@@ -46,6 +50,9 @@ public class UserController {
 		return currentUser.getUsername();
 	}
 
+	/**
+	 * Récupérer la liste de tous les users en excluant le user connecté
+	 **/
 	@GetMapping("/allusersbutme")
 	public Set<UserEntity> getAllUsersButMe() {
 		User user = LoginUtils.getLoggedUser();
@@ -62,17 +69,20 @@ public class UserController {
 		return result;
 	}
 
-	/* Créer un user */
+	/**
+	 * Créer un nouveau user
+	 **/
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public void addNewUser(@RequestBody UserEntity userEntity) {
 		userEntity.setSolde(0);
 		userDao.save(userEntity);
-		System.out.print("User crée");
 		return;
 	}
 
-	/* Réapprovisionner son compte PayMyBuddy */
+	/**
+	 * Réapprovisionner son compte PayMyBuddy
+	 **/
 	@PostMapping("/supplying")
 	@ResponseStatus(HttpStatus.CREATED)
 	public void supplying(@RequestBody Integer montant) {
@@ -84,7 +94,9 @@ public class UserController {
 		return;
 	}
 
-	/* Mettre à jour le user connecté */
+	/**
+	 * Mettre à jour le user connecté
+	 **/
 	@PutMapping
 	@ResponseStatus(HttpStatus.OK)
 	public void updateInfoUser(@RequestBody UserEntity userEntity) {
@@ -106,7 +118,9 @@ public class UserController {
 		return;
 	}
 
-	/* Supprimer le user connecté */
+	/**
+	 * Supprimer le user connecté
+	 **/
 	@DeleteMapping
 	@ResponseStatus(HttpStatus.OK)
 	public void deleteCurrentUser(@RequestBody UserEntity userEntity) {
@@ -114,12 +128,9 @@ public class UserController {
 		return;
 	}
 
-	/***************************************************************/
-	/* SUPPRIMER CONTACTENTITY => AJOUTER UN CHAMP SET<USERENTITY> À USERENTITY */
-	/* AGIR SUR CE SET QUI SERA LA NOUVELLE LISTE DE CONTACT */
-	/***************************************************************/
-
-	/* Récupérer la liste des contacts du user connecté */
+	/**
+	 * Récupérer la liste des contacts du user connecté
+	 **/
 //	@Secured({ Roles.USER })
 	@GetMapping("/contacts/list")
 	public Iterable<UserEntity> findAllUserContacts() {
@@ -132,7 +143,9 @@ public class UserController {
 		return currentUser.getContacts();
 	}
 
-	/* Ajouter un contact à la liste de contact du user connecté */
+	/**
+	 * Ajouter un contact à la liste de contact du user connecté
+	 **/
 	@PostMapping("/contacts")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Iterable<UserEntity> addNewContact(@RequestBody UserEntity userEntity) {
@@ -144,12 +157,9 @@ public class UserController {
 		return findAllUserContacts();
 	}
 
-	/*
-	 * PAS DE UPDATE SUR UN USERCONTACT SPECIFIQUE CAR UPDATEUSER SE REPERCUTE SUR
-	 * LE USERCONTACT DU USER CONNECTE
-	 */
-
-	/* Supprimer un contact de la liste de contact du user connecté */
+	/**
+	 * Supprimer un contact de la liste de contact du user connecté
+	 **/
 	@DeleteMapping("/contacts")
 	@ResponseStatus(HttpStatus.OK)
 	public Iterable<UserEntity> deleteContactFromList(@RequestBody UserEntity userEntity) {

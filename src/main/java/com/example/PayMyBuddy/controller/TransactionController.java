@@ -31,7 +31,9 @@ public class TransactionController {
 	@Autowired
 	UserDao userDao;
 
-	/* Liste de toutes les transactions du User connecté */
+	/**
+	 * Liste de toutes les transactions du User connecté
+	 **/
 	@GetMapping("/list")
 	public Iterable<TransactionEntity> findAllTransactions() {
 		User user = LoginUtils.getLoggedUser();
@@ -40,20 +42,8 @@ public class TransactionController {
 	}
 
 	/**
-	 * Montant TTC de la transaction
-	 * 
-	 * @param montant montant hors taxe
-	 * @throws NullPointerException si montant = 0
-	 */
-	@GetMapping("/ttcamount")
-	public double montantTtc(double montant) {
-		return montant * 1.005;
-	}
-
-	/**
-	 * 
 	 * Montant total récupéré par PMB avec les taxes sur les transactions
-	 */
+	 **/
 	@GetMapping("/taxemoney")
 	public double payMyBuddyMoney() {
 		double result;
@@ -69,11 +59,9 @@ public class TransactionController {
 		return result;
 	}
 
-	/* *********************************************************** */
-	/* NOUVELLE VERSION AVEC UN SET DE USER EN TANT QUE CONTACTS DU USER CONNECTE */
-	/* *********************************************************** */
-
-	/* Transferer de l'argent d'un user à un contact */
+	/**
+	 * Transferer de l'argent d'un user à un contact
+	 **/
 	@PostMapping("/transfert")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Iterable<TransactionEntity> payment2(@RequestBody TransactionEntity transactionEntity) {

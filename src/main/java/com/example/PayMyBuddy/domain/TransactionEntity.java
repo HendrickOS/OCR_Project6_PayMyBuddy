@@ -1,11 +1,13 @@
 package com.example.PayMyBuddy.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class TransactionEntity {
@@ -15,8 +17,12 @@ public class TransactionEntity {
 	private Integer id;
 	private int montant;
 
-	@OneToOne
-	@JoinColumn(name = "user_id", nullable = true)
+//	@ManyToOne(cascade = CascadeType.ALL)
+//	@JoinColumn(name = "user_id", nullable = true)
+//	private UserEntity userEntity;
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinTable(name = "Transactions_UserToContact", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "contact_id"))
 	private UserEntity userEntity;
 
 	public Integer getId() {
