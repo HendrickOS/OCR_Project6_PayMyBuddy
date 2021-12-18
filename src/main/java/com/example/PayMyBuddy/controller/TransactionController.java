@@ -38,7 +38,20 @@ public class TransactionController {
 	public Iterable<TransactionEntity> findAllTransactions() {
 		User user = LoginUtils.getLoggedUser();
 		UserEntity currentUser = userDao.findByUsername(user.getUsername());
-		return currentUser.getTransactions();
+		Set<TransactionEntity> transactions = currentUser.getTransactions();
+
+		for (TransactionEntity transactionEntity : transactions) {
+			if (transactionEntity.getContact() != null) {
+				transactionEntity.getContact().setTransactions(null);
+				transactionEntity.getContact().setContacts(null);
+			}
+			if (transactionEntity.getUser() != null) {
+				transactionEntity.getUser().setTransactions(null);
+				transactionEntity.getUser().setContacts(null);
+			}
+		}
+
+		return transactions;
 	}
 
 	/**
@@ -67,14 +80,13 @@ public class TransactionController {
 	public Iterable<TransactionEntity> payment2(@RequestBody TransactionEntity transactionEntity) {
 		User user = LoginUtils.getLoggedUser();
 		UserEntity currentUser = userDao.findByUsername(user.getUsername());
-		double taxe = 1.005;
 		List<UserEntity> allUsers = userDao.findAll();
 
 		currentUser.getTransactions().add(transactionEntity);
 
 		Set<UserEntity> contacts = currentUser.getContacts();
 		for (UserEntity contact : contacts) {
-			if (contact.getId().equals(transactionEntity.getUserEntity().getId())) {
+			if (contact.getId().equals(transactionEntity.getContact().getId())) {
 				contact.setSolde(contact.getSolde() + transactionEntity.getMontant());
 				currentUser.setSolde(currentUser.getSolde() - (transactionEntity.getMontant() * 1.005));
 				userDao.save(contact);

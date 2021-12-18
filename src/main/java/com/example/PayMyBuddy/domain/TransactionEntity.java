@@ -1,13 +1,11 @@
 package com.example.PayMyBuddy.domain;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 public class TransactionEntity {
@@ -17,13 +15,13 @@ public class TransactionEntity {
 	private Integer id;
 	private int montant;
 
-//	@ManyToOne(cascade = CascadeType.ALL)
-//	@JoinColumn(name = "user_id", nullable = true)
-//	private UserEntity userEntity;
+	@OneToOne
+	@JoinColumn(name = "USER_ID")
+	private UserEntity user;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinTable(name = "Transactions_UserToContact", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "contact_id"))
-	private UserEntity userEntity;
+	@OneToOne
+	@JoinColumn(name = "CONTACT_ID")
+	private UserEntity contact;
 
 	public Integer getId() {
 		return id;
@@ -41,20 +39,20 @@ public class TransactionEntity {
 		this.montant = montant;
 	}
 
-//	public ContactEntity getContactEntity() {
-//		return contactEntity;
-//	}
-//
-//	public void setContactEntity(ContactEntity contactEntity) {
-//		this.contactEntity = contactEntity;
-//	}
-
-	public UserEntity getUserEntity() {
-		return userEntity;
+	public UserEntity getUser() {
+		return user;
 	}
 
-	public void setUserEntity(UserEntity userEntity) {
-		this.userEntity = userEntity;
+	public void setUser(UserEntity user) {
+		this.user = user;
+	}
+
+	public UserEntity getContact() {
+		return contact;
+	}
+
+	public void setContact(UserEntity contact) {
+		this.contact = contact;
 	}
 
 }
