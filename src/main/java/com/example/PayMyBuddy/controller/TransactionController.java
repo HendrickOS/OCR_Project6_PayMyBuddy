@@ -61,12 +61,9 @@ public class TransactionController {
 	public double payMyBuddyMoney() {
 		double result;
 		double somme = 0;
-		List<UserEntity> allUsers = userDao.findAll();
-		for (UserEntity user : allUsers) {
-			Set<TransactionEntity> allTransactions = user.getTransactions();
-			for (TransactionEntity transactions : allTransactions) {
-				somme = somme + transactions.getMontant();
-			}
+		Iterable<TransactionEntity> allTransactions = transactionDao.findAll();
+		for (TransactionEntity transaction : allTransactions) {
+			somme = somme + transaction.getMontant();
 		}
 		result = somme * 0.005;
 		return result;

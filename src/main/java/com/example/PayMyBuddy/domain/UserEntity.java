@@ -14,8 +14,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 @Entity
 public class UserEntity implements Comparable<UserEntity> {
 	@Id
@@ -27,13 +25,8 @@ public class UserEntity implements Comparable<UserEntity> {
 	private Double solde;
 	private String description;
 
-//	@OneToMany(cascade = CascadeType.ALL)
-//	@JoinColumn(name = "user_id")
-//	private Set<UserEntity> contacts = new HashSet<>();
-
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	@JoinTable(name = "Contacts_of_User", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "contact_id"))
-	@JsonIgnoreProperties("contacts")
 	private Set<UserEntity> contacts = new HashSet<>();
 
 	@OneToMany(cascade = CascadeType.ALL)

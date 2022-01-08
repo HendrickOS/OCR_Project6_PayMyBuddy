@@ -19,14 +19,6 @@ import com.example.PayMyBuddy.security.JwtAuthenticationFilter;
 @EnableWebSecurity
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	// @Override
-	// protected void configure(HttpSecurity http) throws Exception {
-	// http.cors().and().csrf().disable().authorizeRequests().anyRequest().permitAll().and()
-	// .addFilterBefore(new JwtAuthenticationFilter(jwtConfig),
-	// UsernamePasswordAuthenticationFilter.class);
-	//
-	// }
-
 	@Autowired
 	private JwtConfig jwtConfig;
 

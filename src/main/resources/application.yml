@@ -1,13 +1,3 @@
-#spring:
-#    datasource:
-#        url: jdbc:derby:directory:C://Derby//test;create=true
-#        username: derbyuser
-#        password: password
-#    jpa:   
-#        show-sql: true
-#        hibernate.ddl-auto: update
-#        properties.hibernate.dialect: org.hibernate.dialect.DerbyTenSevenDialect
-       
 jwt:
    signingKey: secretkey
    tokenValidity: 86400
@@ -25,7 +15,3 @@ spring:
 ---
 
 spring.profiles: hendrick
-
-#spring:
-#    datasource:
-#        url: jdbc:derby:directory:/films/derby/contact;create=true
