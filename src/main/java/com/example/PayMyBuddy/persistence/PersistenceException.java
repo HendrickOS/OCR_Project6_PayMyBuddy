@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 
 public class PersistenceException extends Exception {
 
-	private HttpStatus status;
+	private final HttpStatus status;
 
 	public HttpStatus getStatus() {
 		return status;
