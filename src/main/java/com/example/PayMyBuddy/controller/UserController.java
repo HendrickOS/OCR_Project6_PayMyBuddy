@@ -1,5 +1,6 @@
 package com.example.PayMyBuddy.controller;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -11,6 +12,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -66,6 +68,11 @@ public class UserController {
 				}
 			}
 		}
+		for (UserEntity contact : currentUser.getContacts()) {
+			contact.setContacts(null);
+			contact.setTransactions(new HashSet<>());
+		}
+		currentUser.setTransactions(new HashSet<>());
 		return result;
 	}
 
@@ -83,9 +90,9 @@ public class UserController {
 	/**
 	 * Réapprovisionner son compte PayMyBuddy
 	 **/
-//	@PostMapping("/supplying")
-//	@ResponseStatus(HttpStatus.CREATED)
-	public double supplying(@RequestBody Integer montant) {
+	@GetMapping("/supplying/{montant}")
+	@ResponseStatus(HttpStatus.CREATED)
+	public double supplying(@PathVariable Integer montant) {
 		User user = LoginUtils.getLoggedUser();
 		UserEntity currentUser = userDao.findByUsername(user.getUsername());
 		currentUser.setSolde(currentUser.getSolde() + montant);
@@ -138,7 +145,9 @@ public class UserController {
 		System.out.println(currentUser.getContacts().size());
 		for (UserEntity contact : currentUser.getContacts()) {
 			contact.setContacts(null);
+			contact.setTransactions(new HashSet<>());
 		}
+		currentUser.setTransactions(new HashSet<>());
 		return currentUser.getContacts();
 	}
 

@@ -25,7 +25,7 @@ public class UserEntity implements Comparable<UserEntity> {
 	private Double solde;
 	private String description;
 
-	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "Contacts_of_User", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "contact_id"))
 	private Set<UserEntity> contacts = new HashSet<>();
 
