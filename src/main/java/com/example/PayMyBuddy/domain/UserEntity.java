@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class UserEntity implements Comparable<UserEntity> {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -32,6 +33,10 @@ public class UserEntity implements Comparable<UserEntity> {
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
 	private Set<TransactionEntity> transactions = new HashSet<>();
+
+	public UserEntity() {
+		super();
+	}
 
 	public Integer getId() {
 		return id;

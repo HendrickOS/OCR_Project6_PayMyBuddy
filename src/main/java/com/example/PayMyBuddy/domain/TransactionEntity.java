@@ -23,6 +23,10 @@ public class TransactionEntity {
 	@JoinColumn(name = "CONTACT_ID")
 	private UserEntity contact;
 
+	public TransactionEntity() {
+		super();
+	}
+
 	public Integer getId() {
 		return id;
 	}

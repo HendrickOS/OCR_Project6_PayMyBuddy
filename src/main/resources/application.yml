@@ -2,16 +2,30 @@ jwt:
    signingKey: secretkey
    tokenValidity: 86400
     
+#spring:
+#    datasource:
+#        url: jdbc:derby:directory:C://Derby//contact;create=true
+#        username: databasePMB
+#        password: password
+#    jpa:   
+#        show-sql: true
+#        hibernate.ddl-auto: update
+#        properties.hibernate.dialect: org.hibernate.dialect.DerbyTenSevenDialect
+
+        
 spring:
     datasource:
-        url: jdbc:derby:directory:C://Derby//contact;create=true
-        username: databasePMB
-        password: password
+#        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:8080/mydatabase
+        username: root
+        password: 12345
+        
     jpa:   
         show-sql: true
         hibernate.ddl-auto: update
-        properties.hibernate.dialect: org.hibernate.dialect.DerbyTenSevenDialect
-        
----
+        properties.hibernate.dialect: org.hibernate.dialect.MySQLDialect
 
-spring.profiles: hendrick
+        
+#---
+#
+#spring.profiles: hendrick
